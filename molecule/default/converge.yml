@@ -20,3 +20,7 @@
     - name: "Include iquzart.crontab_prometheus_exporter"
       ansible.builtin.include_role:
         name: "iquzart.crontab_prometheus_exporter"
+      vars:
+        cron_script_dir: /opt/cron-job-scripts
+        cron_job_name: example_job
+        cron_job: uname -a

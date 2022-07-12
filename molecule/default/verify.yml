@@ -7,6 +7,12 @@
     - debian10
     - rockey8
   gather_facts: false
+
+  vars:
+    cron_script_dir: /opt/cron-job-scripts
+    cron_job_name: example_job
+    cron_job: uname -a
+
   tasks:
   - name: "stat /usr/local/bin/cron-prom exists"
     ansible.builtin.stat:
@@ -20,14 +26,14 @@
       success_msg: "cron-prom verified installation"
       fail_msg: "cron-prom doesn't exist"
 
-  # - name: "stat {{ cron_script_dir }} exists"
-  #   stat:
-  #     path: "{{ cron_script_dir }}"
-  #   register: cron_script_dir_stat
+  - name: "stat {{ cron_script_dir }} exists"
+    ansible.builtin.stat:
+      path: "{{ cron_script_dir }}"
+    register: cron_script_dir
 
-  # - name: "check if {{ cron_script_dir }} exists"
-  #   assert:
-  #     that:
-  #       - cron_script_dir.stat.exists == True
-  #     success_msg: "{{ cron_script_dir }} verfied directory"
-  #     fail_msg: "{{ cron_script_dir }} doesn't exist"
+  - name: "check if {{ cron_script_dir }} exists"
+    ansible.builtin.assert:
+      that:
+        - cron_script_dir.stat.exists == True
+      success_msg: "{{ cron_script_dir }} verfied directory"
+      fail_msg: "{{ cron_script_dir }} doesn't exist"
