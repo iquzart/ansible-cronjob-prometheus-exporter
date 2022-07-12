@@ -1,2 +1,69 @@
 ---
 # tasks file for crontab_prometheus_exporter
+
+
+- name: Create directory "{{ cron_script_dir }}" for crontab scripts
+  ansible.builtin.file:
+    path: "{{ cron_script_dir }}"
+    state: directory
+    mode: '0755'
+  tags: 
+    - "directory"
+    - "setup"
+
+- name: Copy cronprom script to /usr/local/bin
+  ansible.builtin.copy:
+    src: cron-prom.sh
+    dest: /usr/local/bin/cron-prom
+    owner: root
+    group: root
+    mode: u+rwx,g-rx,o-rx
+  tags: 
+    - "cron-prom"
+    - "setup"
+
+- name: Create cron script file in "{{ cron_script_dir }}" directory
+  ansible.builtin.copy:
+    dest: "{{ cron_script_dir }}/{{ cron_job_name }}.sh"
+    owner: root
+    group: root
+    mode: u+rwx,g-rx,o-rx
+    content: | 
+      {{ cron_job }}
+  tags: 
+    - "setup-job-script"
+    - "setup"
+
+- name: Creates a cron file in "/etc/cron.d/{{ cron_job_name }}"
+  ansible.builtin.cron:
+    name: Connection Monitor
+    minute: "*/1"
+    user: root
+    job: "cron-prom -n {{ cron_job_name }} -s {{ cron_script_dir }}/{{ cron_job_name }}.sh"
+    cron_file: "{{ cron_job_name }}"
+  tags: 
+    - "setup-job"
+    - "setup"
+
+- name: Create "PATH=/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:usr/bin" on top of crontab
+  ansible.builtin.cron:
+    name: PATH
+    env: yes
+    user: root
+    job: /usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:usr/bin
+    cron_file: "{{ cron_job_name }}"
+  tags: 
+    - "env-setup"
+    - "setup"
+
+- name: Create "SHEL:/bin/bash" on top of crontab
+  ansible.builtin.cron:
+    name: SHELL
+    env: yes
+    user: root
+    job: /bin/bash
+    cron_file: "{{ cron_job_name }}"
+  tags: 
+    - "env-setup"
+    - "setup"
+

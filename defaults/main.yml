@@ -1,2 +1,8 @@
 ---
 # defaults file for crontab_prometheus_exporter
+
+cron_script_dir: /opt/cron-job-scripts
+cron_job_name: example_job
+cron_job: | 
+  uname -a; 
+  hostname

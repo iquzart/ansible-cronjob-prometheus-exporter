@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: crontab_prometheus_exporter
   author: Muhammed Iqbal
-  namespace: iquzart.crontab_prometheus_exporter
+  namespace: iquzart
   description: cronjob prometheus exporter to monitor cron jobs
   company: ConSol MENA
   license: MIT

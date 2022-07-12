@@ -3,13 +3,20 @@
   hosts: 
     - ubuntu2004
     - debian10
-    - centos8
+    - rockey8
   tasks:
-    # replace these tasks with whatever you find suitable to test
-    - name: Copy something to test use of synchronize module
-      ansible.builtin.copy:
-        src: /etc/hosts
-        dest: /tmp/hosts-from-controller
+    - name: Install crontab
+      ansible.builtin.apt:
+        name: cron
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install crontab
+      ansible.builtin.yum:
+        name: crontabs
+        state: latest
+      when: ansible_os_family == "RedHat"
+
     - name: "Include iquzart.crontab_prometheus_exporter"
       ansible.builtin.include_role:
         name: "iquzart.crontab_prometheus_exporter"

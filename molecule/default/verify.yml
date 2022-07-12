@@ -5,9 +5,29 @@
   hosts: 
     - ubuntu2004
     - debian10
-    - centos8
+    - rockey8
   gather_facts: false
   tasks:
-  - name: Example assertion
-    ansible.builtin.assert:
-      that: true
+  - name: "stat /usr/local/bin/cron-prom exists"
+    stat:
+      path: "/usr/local/bin/cron-prom"
+    register: cron_prom_stat
+
+  - name: "check if /usr/local/bin/cron-prom exists"
+    assert:
+      that:
+        - cron_prom_stat.stat.exists == True
+      success_msg: "cron-prom verified installation"
+      fail_msg: "cron-prom doesn't exist"
+
+  # - name: "stat {{ cron_script_dir }} exists"
+  #   stat:
+  #     path: "{{ cron_script_dir }}"
+  #   register: cron_script_dir_stat
+
+  # - name: "check if {{ cron_script_dir }} exists"
+  #   assert:
+  #     that:
+  #       - cron_script_dir.stat.exists == True
+  #     success_msg: "{{ cron_script_dir }} verfied directory"
+  #     fail_msg: "{{ cron_script_dir }} doesn't exist"
