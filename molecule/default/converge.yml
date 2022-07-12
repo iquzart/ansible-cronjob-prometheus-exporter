@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: 
+    - ubuntu2004
+    - debian10
+    - centos8
+  tasks:
+    # replace these tasks with whatever you find suitable to test
+    - name: Copy something to test use of synchronize module
+      ansible.builtin.copy:
+        src: /etc/hosts
+        dest: /tmp/hosts-from-controller
+    - name: "Include iquzart.crontab_prometheus_exporter"
+      ansible.builtin.include_role:
+        name: "iquzart.crontab_prometheus_exporter"

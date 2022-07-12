@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Muhammed Iqbal
+  namespace: iquzart.crontab_prometheus_exporter
+  description: cronjob prometheus exporter
+  company: ConSol MENA
+  license: license (GPL-2.0-or-later, MIT, etc)
+  min_ansible_version: 2.1
+  galaxy_tags:
+    - crontab
+    - prometheus
+    - monitoring
+dependencies: []
