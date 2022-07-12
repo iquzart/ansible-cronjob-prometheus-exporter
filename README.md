@@ -1,7 +1,7 @@
-Role Name
+Crontab Prometheus Exporter
 =========
 
-A brief description of the role goes here.
+Ansible role to setup crontab prometheus exporter
 
 Requirements
 ------------
@@ -25,12 +25,12 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: iquzart.crontab_prometheus_exporter, x: 42 }
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
