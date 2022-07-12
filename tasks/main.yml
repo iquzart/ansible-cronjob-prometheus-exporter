@@ -1,13 +1,11 @@
 ---
 # tasks file for crontab_prometheus_exporter
-
-
 - name: Create directory "{{ cron_script_dir }}" for crontab scripts
   ansible.builtin.file:
     path: "{{ cron_script_dir }}"
     state: directory
     mode: '0755'
-  tags: 
+  tags:
     - "directory"
     - "setup"
 
@@ -18,7 +16,7 @@
     owner: root
     group: root
     mode: u+rwx,g-rx,o-rx
-  tags: 
+  tags:
     - "cron-prom"
     - "setup"
 
@@ -28,9 +26,9 @@
     owner: root
     group: root
     mode: u+rwx,g-rx,o-rx
-    content: | 
+    content: |
       {{ cron_job }}
-  tags: 
+  tags:
     - "setup-job-script"
     - "setup"
 
@@ -41,7 +39,7 @@
     user: root
     job: "cron-prom -n {{ cron_job_name }} -s {{ cron_script_dir }}/{{ cron_job_name }}.sh"
     cron_file: "{{ cron_job_name }}"
-  tags: 
+  tags:
     - "setup-job"
     - "setup"
 
@@ -52,7 +50,7 @@
     user: root
     job: /usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:usr/bin
     cron_file: "{{ cron_job_name }}"
-  tags: 
+  tags:
     - "env-setup"
     - "setup"
 
@@ -66,4 +64,3 @@
   tags: 
     - "env-setup"
     - "setup"
-

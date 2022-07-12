@@ -9,12 +9,12 @@
   gather_facts: false
   tasks:
   - name: "stat /usr/local/bin/cron-prom exists"
-    stat:
+    ansible.builtin.stat:
       path: "/usr/local/bin/cron-prom"
     register: cron_prom_stat
 
   - name: "check if /usr/local/bin/cron-prom exists"
-    assert:
+    ansible.builtin.assert:
       that:
         - cron_prom_stat.stat.exists == True
       success_msg: "cron-prom verified installation"
