@@ -77,7 +77,7 @@ if [[ ! -x "$script" || -d "$script" ]]; then
     echo "ERROR: Can't find script for '$cron_job_name'. Aborting."
     cron_job_exit_code=2
 else 
-    $(bash "$script" 2>&1 >/dev/null )
+    bash "$script" 2>&1 >/dev/null
     # Get results and clean up.
     cron_job_exit_code=${PIPESTATUS[0]}
 fi
