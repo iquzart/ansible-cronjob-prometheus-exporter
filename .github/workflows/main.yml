@@ -25,13 +25,16 @@ jobs:
       options: --privileged
     steps:
       - name: clone repo
-        run: git clone "https://github.com/${{ github.repository }}.git" .
+        run: |
+          git clone "https://github.com/${{ github.repository }}.git" .
         
       - name: test podman
-        run: podman ps
+        run: |
+          podman ps
 
-      - name: molecule converge
-        run: molecule converge
+      - name: Test with molecule
+        run: |
+          molecule test
 
 
 # jobs:
