@@ -22,10 +22,13 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: diquzart/molecule:latest
-      options: --cpus 1
+      options: --privileged
     steps:
       - name: clone repo
         run: git clone "https://github.com/${{ github.repository }}.git" .
+        
+      - name: test podman
+        run: podman ps
 
       - name: molecule converge
         run: molecule converge
