@@ -30,4 +30,4 @@ jobs:
 
       - name: Test with molecule
         run: |
-          molecule test
+          molecule converge
