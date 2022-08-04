@@ -35,7 +35,7 @@ provisioner:
     #   pipelining: false
 verifier:
   name: ansible
-lint: |
-  set -e
-  yamllint .
-  ansible-lint .
+# lint: |
+#   set -e
+#   yamllint .
+#   ansible-lint .
